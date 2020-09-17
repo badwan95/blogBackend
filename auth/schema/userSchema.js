@@ -14,6 +14,7 @@ const users = mongoose.Schema({
 });
 
 users.pre('save',async function(){
-  this.password = await bcrypt.hash(this.password,5);
+  this.password = await bcrypt.hash(this.password,5); //To hash the password
 });
 
+module.exports = mongoose.model('users',users);
