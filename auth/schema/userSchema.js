@@ -18,13 +18,13 @@ users.pre('save',async function(){
 });
 
 users.statics.authenticateBasic = async function(username,password){
-  let theUser = await this.findOne({username});
-  let valid = await bcrypt.compare(password,theUser.password);
+  let theUser = await this.findOne({username}); //To find if the user exists, and if it does then it retrieves it
+  let valid = await bcrypt.compare(password,theUser.password); //Comparing the provided password with the hashed password, returns true or false
   return valid ? theUser : Promise.reject();
 };
 
 users.statics.generateToken = function(user){
-  let token = jwt.sign({username: user.username ,_id:user._id,userRole:user.role},SECRET,{expiresIn:TOKEN_TIMEOUT});
+  let token = jwt.sign({username: user.username ,_id:user._id,userRole:user.role},SECRET,{expiresIn:TOKEN_TIMEOUT}); // Signing JSON Web Token with a secret and adding content to it
   return token;
 };
 
